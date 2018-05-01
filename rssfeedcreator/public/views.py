@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Public section, including homepage and signup."""
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from rssfeedcreator.extensions import login_manager
 from rssfeedcreator.public.forms import LoginForm
@@ -18,20 +18,28 @@ def load_user(user_id):
     return User.get_by_id(int(user_id))
 
 
+
 @blueprint.route('/', methods=['GET', 'POST'])
 def home():
     """Home page."""
+
+    if current_user and current_user.is_authenticated:
+        return render_template('public/home.html')
+
     form = LoginForm(request.form)
     # Handle logging in
     if request.method == 'POST':
         if form.validate_on_submit():
             login_user(form.user)
             flash('You are logged in.', 'success')
-            redirect_url = request.args.get('next') or url_for('user.members')
+            redirect_url = request.args.get('next') or url_for('public.home')
             return redirect(redirect_url)
         else:
             flash_errors(form)
-    return render_template('public/home.html', form=form)
+    elif request.method == 'GET':
+        return redirect(url_for('public.register'))
+
+
 
 
 @blueprint.route('/logout/')
@@ -48,9 +56,11 @@ def register():
     """Register new user."""
     form = RegisterForm(request.form)
     if form.validate_on_submit():
-        User.create(username=form.username.data, email=form.email.data, password=form.password.data, active=True)
-        flash('Thank you for registering. You can now log in.', 'success')
-        return redirect(url_for('public.home'))
+        user = User.create(username=form.username.data, email=form.email.data, password=form.password.data, active=True)
+        login_user(user)
+        flash('You are logged in.', 'success')
+        redirect_url = request.args.get('next') or url_for('public.home')
+        return redirect(redirect_url)
     else:
         flash_errors(form)
     return render_template('public/register.html', form=form)
