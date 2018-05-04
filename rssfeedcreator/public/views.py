@@ -18,28 +18,31 @@ def load_user(user_id):
     return User.get_by_id(int(user_id))
 
 
-
-@blueprint.route('/', methods=['GET', 'POST'])
+@blueprint.route('/', methods=['GET'])
 def home():
     """Home page."""
-
     if current_user and current_user.is_authenticated:
-        return render_template('public/home.html')
+        return redirect(url_for('user.members'))
 
-    form = LoginForm(request.form)
-    # Handle logging in
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            login_user(form.user)
-            flash('You are logged in.', 'success')
-            redirect_url = request.args.get('next') or url_for('public.home')
-            return redirect(redirect_url)
-        else:
-            flash_errors(form)
-    elif request.method == 'GET':
+    form = RegisterForm(request.form)
+    return render_template('public/home.html', form=form)
+
+
+@blueprint.route('/login/', methods=['GET', 'POST'])
+def login():
+
+    if request.method == 'GET':
         return redirect(url_for('public.register'))
 
+    form = LoginForm(request.form)
 
+    if form.validate_on_submit():
+        login_user(form.user)
+        flash('You are logged in.', 'success')
+        redirect_url = request.args.get('next') or url_for('user.members')
+        return redirect(redirect_url)
+    else:
+        flash_errors(form)
 
 
 @blueprint.route('/logout/')
@@ -54,17 +57,18 @@ def logout():
 @blueprint.route('/register/', methods=['GET', 'POST'])
 def register():
     """Register new user."""
+    if request.method == 'GET':
+        return  redirect(url_for('public.home'))
+
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         user = User.create(username=form.username.data, email=form.email.data, password=form.password.data, active=True)
         login_user(user)
         flash('You are logged in.', 'success')
-        redirect_url = request.args.get('next') or url_for('public.home')
+        redirect_url = request.args.get('next') or url_for('user.members')
         return redirect(redirect_url)
     else:
         flash_errors(form)
-    return render_template('public/register.html', form=form)
-
 
 @blueprint.route('/about/')
 def about():
