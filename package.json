@@ -15,7 +15,9 @@
   },
   "author": "Garrett Beatty",
   "license": "BSD-3-Clause",
-  "engines": { "node" : ">=4" },
+  "engines": {
+    "node": ">=4"
+  },
   "bugs": {
     "url": "https://github.com/GarrettBeatty/rssfeedcreator/issues"
   },

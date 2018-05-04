@@ -32,7 +32,7 @@ def home():
 def login():
 
     if request.method == 'GET':
-        return redirect(url_for('public.register'))
+        return redirect(url_for('public.home'))
 
     form = LoginForm(request.form)
 
@@ -43,6 +43,7 @@ def login():
         return redirect(redirect_url)
     else:
         flash_errors(form)
+        return redirect(url_for('public.home'))
 
 
 @blueprint.route('/logout/')
@@ -69,6 +70,7 @@ def register():
         return redirect(redirect_url)
     else:
         flash_errors(form)
+
 
 @blueprint.route('/about/')
 def about():

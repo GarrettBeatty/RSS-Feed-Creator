@@ -1,5 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
+    <h1>{{ f.feed.title }}</h1>
+    <h2>{{ f.feed.subtitle }}</h2>
+
+    <div class="list-group">
+       {% for post in f.entries %}
+
+            {#        {{ post.description }}#}
+            {#        {{ post.link }}#}
+
+
+        <a href="{{ post.link }}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ post.title }}</h5>
+                <small>{{ post.updated }}</small>
+            </div>
+{#            <p class="mb-1">{{ post.description }}</p>#}
+            <small>{{ post.link }}</small>
+        </a>
+    {% endfor %}
+    </div>
 
 {% endblock %}
 
