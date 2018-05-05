@@ -11,7 +11,7 @@ blueprint = Blueprint('user', __name__, url_prefix='/users', static_folder='../s
 @login_required
 def members():
     """List members."""
-    feeds = current_user.feeds
+    feeds = reversed(current_user.feeds)
     form = FeedForm(request.form)
 
     return render_template('users/members.html', feeds=feeds, form=form)

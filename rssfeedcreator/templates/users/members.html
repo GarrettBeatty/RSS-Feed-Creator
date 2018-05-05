@@ -3,22 +3,31 @@
 
     <div class="body-content">
         <div class="container">
-            <h1>Welcome {{ current_user.username }}</h1>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-4">
+                    <h1>Welcome {{ current_user.username }}</h1>
+                </div>
+            </div>
             {% include 'users/add_feed.html' %}
 
-            <h2>My Feeds</h2>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-5">
+                    <h2>My Feeds</h2>
+                </div>
+            </div>
+
 
             <div class="list-group">
                 {% for feed in feeds %}
 
-                    <a href="{{ url_for('feed.index', feedurl=feed.url) }}"
+                    <a href="{{ url_for('feed.index', feed_url=feed.url) }}"
                        class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{ feed.title }}</h5>
                             {#                    <small>{{ post.updated }}</small>#}
                         </div>
                         <p class="mb-1">{{ feed.subtitle }}</p>
-                        <small>{{ url_for('feed.index', feedurl=feed.url) }}</small>
+                        <small>{{ url_for('feed.index', feed_url=feed.url) }}</small>
                     </a>
                 {% endfor %}
             </div>

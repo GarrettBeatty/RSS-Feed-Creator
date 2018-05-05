@@ -4,6 +4,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 
 from rssfeedcreator.extensions import login_manager
+from rssfeedcreator.feed.forms import FeedForm
 from rssfeedcreator.public.forms import LoginForm
 from rssfeedcreator.user.forms import RegisterForm
 from rssfeedcreator.user.models import User
@@ -25,7 +26,8 @@ def home():
         return redirect(url_for('user.members'))
 
     form = RegisterForm(request.form)
-    return render_template('public/home.html', form=form)
+    fform = FeedForm(request.form)
+    return render_template('public/home.html', form=form, fform=fform)
 
 
 @blueprint.route('/login/', methods=['GET', 'POST'])
