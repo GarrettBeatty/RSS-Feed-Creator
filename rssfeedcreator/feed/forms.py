@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
 import feedparser
 import sys
 
@@ -11,7 +11,6 @@ class FeedForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         """Create instance."""
         super(FeedForm, self).__init__(*args, **kwargs)
-        self.feed = None
 
     def validate(self):
         """Validate the form."""
@@ -19,8 +18,11 @@ class FeedForm(FlaskForm):
         if not initial_validation:
             return False
 
-        self.feed = feedparser.parse(self.feed_url.data)
-        if len(self.feed.entries) == 0:
-            return False
-
         return True
+
+    def validate_feed_url(self, field):
+        # count the number of user ids for that username
+        # if it's not 0, there's a user with that username already
+        feed = feedparser.parse(field.data)
+        if len(feed.entries) == 0:
+            raise ValidationError('RSS URL not valid')
