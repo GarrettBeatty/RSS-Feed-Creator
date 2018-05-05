@@ -6,7 +6,12 @@ from flask_login import UserMixin
 
 from rssfeedcreator.database import Column, Model, SurrogatePK, db, reference_col, relationship
 from rssfeedcreator.extensions import bcrypt
+from rssfeedcreator.feed.models import  Feed
 
+user_feeds = db.Table('user_feeds',
+    db.Column('feed_id', db.Integer, db.ForeignKey('feeds.url'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
+)
 
 class Role(SurrogatePK, Model):
     """A role for a user."""
@@ -38,6 +43,8 @@ class User(UserMixin, SurrogatePK, Model):
     last_name = Column(db.String(30), nullable=True)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
+    feeds = db.relationship('Feed', secondary=user_feeds, lazy='subquery',
+                          backref=db.backref('users', lazy=True))
 
     def __init__(self, username, email, password=None, **kwargs):
         """Create instance."""
@@ -63,3 +70,6 @@ class User(UserMixin, SurrogatePK, Model):
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<User({username!r})>'.format(username=self.username)
+
+
+

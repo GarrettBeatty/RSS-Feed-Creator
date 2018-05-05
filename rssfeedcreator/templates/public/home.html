@@ -7,23 +7,10 @@
             {% include 'public/register.html' %}
             <div class="row">
                 <div class="col-md-6 col-md-offset-4">
-                    <h2>Or enter RSS Feed URL</h2>
+                    <h2>Or Enter RSS Feed URL</h2>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <form role="form" id="rssform" action="{{ url_for('feed.index') }}">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-addon">rss.gbeatty.com/feed/</span>
-                            <input type="text" class="form-control" placeholder="https://www.reddit.com/r/python/.rss"
-                                   name="feedurl">
-                        </div>
-                        <br>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Get Feed</button>
-                        <br>
-                    </form>
-                </div>
-            </div>
+            {% include 'public/get_feed.html' %}
         </div>
     </div>
 

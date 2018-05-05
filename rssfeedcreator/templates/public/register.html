@@ -20,7 +20,7 @@
                     <div class="col-lg-12">
                         <form id="loginForm" method="post" action="{{ url_for('public.login') }}" role="login"
                               style="display: block;">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            {{ form.csrf_token }}
                             <div class="form-group">
                                 {{ form.username(placeholder="Username", class_="form-control") }}
                                 {{ form.password(placeholder="Password", class_="form-control") }}
@@ -29,7 +29,7 @@
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">
                                         <input type="submit" name="login-submit" id="login-submit" tabindex="4"
-                                               class="form-control btn btn-login" value="Log In">
+                                               class="btn btn-lg btn-primary btn-block" value="Log In">
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">
                                         <input type="submit" name="register-submit" id="register-submit"
-                                               tabindex="4" class="form-control btn btn-register"
+                                               tabindex="4" class="btn btn-lg btn-primary btn-block"
                                                value="Register">
                                     </div>
                                 </div>

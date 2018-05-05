@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form role="form" id="rssform" method="post" action="{{ url_for('feed.add') }}">
+            {{ form.csrf_token }}
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">rss.gbeatty.com/feed/</span>
+                 {{ form.feed_url(placeholder="https://www.reddit.com/r/python/.rss", class_="form-control") }}
+            </div>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Feed</button>
+            <br>
+        </form>
+    </div>
+</div>
