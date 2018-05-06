@@ -4,6 +4,11 @@ RSS Feed Creator
 
 A flasky app.
 
+.. image:: https://travis-ci.org/GarrettBeatty/RSS-Feed-Creator.svg?branch=master
+    :target: https://travis-ci.org/GarrettBeatty/RSS-Feed-Creator
+
+
+
 
 Quickstart
 ----------
