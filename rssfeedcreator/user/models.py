@@ -9,7 +9,7 @@ from rssfeedcreator.extensions import bcrypt
 from rssfeedcreator.feed.models import  Feed
 
 user_feeds = db.Table('user_feeds',
-    db.Column('feed_id', db.Integer, db.ForeignKey('feeds.url'), primary_key=True),
+    db.Column('feed_id', db.Text, db.ForeignKey('feeds.url'), primary_key=True),
     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True)
 )
 
