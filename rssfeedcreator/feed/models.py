@@ -6,8 +6,9 @@ from rssfeedcreator.extensions import db
 
 class Feed(Model):
     __tablename__ = 'feeds'
-    
-    url = Column(db.Text, primary_key=True)
+
+    id = Column(db.Integer, primary_key=True)
+    url = Column(db.Text)
     title = Column(db.Text)
     subtitle = Column(db.Text)
 
