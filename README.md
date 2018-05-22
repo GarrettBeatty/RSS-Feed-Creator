@@ -1,3 +1,5 @@
+# RSS Feed Creator
+
 A flasky app.
 
 [![image](https://travis-ci.org/GarrettBeatty/RSS-Feed-Creator.svg?branch=master)](https://travis-ci.org/GarrettBeatty/RSS-Feed-Creator)
@@ -8,7 +10,7 @@ Quickstart
 First, set your app's secret key as an environment variable. For
 example, add the following to `.bashrc` or `.bash_profile`.
 
-``` {.sourceCode .bash}
+```
 export RSSFEEDCREATOR_SECRET='something-really-secret'
 ```
 
